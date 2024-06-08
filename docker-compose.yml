@@ -15,6 +15,11 @@ services:
     command: ["emmett", "-aemmett_.py", "serve"]
     network_mode: host
 
+  falcon:
+    build: .
+    command: ["uvicorn", "falcon_:app", "--no-access-log"]
+    network_mode: host
+
   fastapi:
     build: .
     command: ["uvicorn", "fastapi_:app", "--no-access-log"]

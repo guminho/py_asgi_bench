@@ -2,6 +2,7 @@ fwks='
     aiohttp
     blacksheep
     emmett
+    falcon
     fastapi
     muffin
     robyn
