@@ -3,20 +3,25 @@
 ## result
 #### requests/sec:
 ```
-granian   :118783|#######################| 100/100
-emmett    : 55682|###########             | 46/100
-uvicorn   : 46718|#########3              | 39/100
-blacksheep: 37922|#######4                | 31/100
-falcon    : 36253|#######2                | 30/100
-muffin    : 35245|######9                 | 29/100
-sanic     : 32851|######4                 | 27/100
-robyn     : 28943|#####7                  | 24/100
-starlette : 26534|#####2                  | 22/100
-aiohttp   : 22527|####3                   | 18/100
-fastapi   : 15177|##8                     | 12/100
+granian   :134848|#######################| 100/100
+mrhttp    :125493|######################3 | 93/100
+graniana  : 76895|#############6          | 57/100
+emmett    : 46061|########1               | 34/100
+uvicorn   : 38833|######7                 | 28/100
+sanic     : 33877|######                  | 25/100
+aiohttp   : 31518|#####5                  | 23/100
+muffin    : 31332|#####5                  | 23/100
+blacksheep: 31192|#####5                  | 23/100
+falcon    : 29543|#####                   | 21/100
+starlette : 26753|####5                   | 19/100
+robyn     : 16882|##8                     | 12/100
+fastapi   : 16717|##8                     | 12/100
 ```
 
 ## how-to-run
+### prerequisite
+- install [wg/wrk](https://github.com/wg/wrk)
+
 #### quick-run
 ```bash
 bash bens.sh
@@ -37,3 +42,6 @@ curl localhost:8000/hello/x
 # bench
 bash ben.sh
 ```
+
+## ref
+- [techempower.com/benchmarks](https://www.techempower.com/benchmarks/#section=test&runid=fd4f1f27-72cd-4e89-92c6-0d965fadb733&hw=ph&test=update&l=zijocf-6bi)

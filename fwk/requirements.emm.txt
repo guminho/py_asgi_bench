@@ -1,2 +1,0 @@
-granian==1.4.1
-emmett==2.5.11

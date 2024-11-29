@@ -1,57 +1,78 @@
 services:
   aiohttp:
-    build: .
-    command: ["gunicorn", "aiohttp_:app", "-k=aiohttp.GunicornUVLoopWebWorker"]
-    network_mode: host
-
-  blacksheep:
-    build: .
-    command: ["uvicorn", "blacksheep_:app", "--no-access-log"]
+    build:
+      args: { LIBS: 'gunicorn aiohttp[speedups]' } # 3.11.8
+    command: [ "gunicorn", "aiohttp_:app", "-k=aiohttp.GunicornUVLoopWebWorker" ]
     network_mode: host
 
   emmett:
     build:
-      dockerfile: emm.Dockerfile
-    command: ["emmett", "-aemmett_.py", "serve"]
-    network_mode: host
-
-  falcon:
-    build: .
-    command: ["uvicorn", "falcon_:app", "--no-access-log"]
-    network_mode: host
-
-  fastapi:
-    build: .
-    command: ["uvicorn", "fastapi_:app", "--no-access-log"]
-    network_mode: host
-
-  muffin:
-    build: .
-    command: ["uvicorn", "muffin_:app", "--no-access-log"]
-    network_mode: host
-
-  robyn:
-    build: .
-    command: ["python", "robyn_.py", "--log-level=WARN"]
-    network_mode: host
-
-  sanic:
-    build: .
-    command: ["sanic", "sanic_:app", "--single-process", "--no-access-logs"]
-    network_mode: host
-
-  starlette:
-    build: .
-    command: ["uvicorn", "starlette_:app", "--no-access-log"]
+      args: { LIBS: emmett } # 2.6.2
+    command: [ "emmett", "-aemmett_.py", "serve" ]
     network_mode: host
 
   granian:
-    build: 
-      dockerfile: emm.Dockerfile
-    command: ["granian", "granian_:app"]
+    build:
+      args: { LIBS: granian }
+    command: [ "granian", "granian_:app" ]
+    network_mode: host
+
+  graniana:
+    build:
+      args: { LIBS: granian }
+    command: [ "granian", "--interface=asgi", "graniana:app" ]
+    network_mode: host
+
+  mrhttp:
+    build:
+      args: { LIBS: mrhttp mrpacker }
+    command: [ "python", "mrhttp_.py" ]
+    network_mode: host
+
+  robyn:
+    build:
+      args: { LIBS: robyn } # 0.64.2
+    command: [ "python", "robyn_.py", "--log-level=WARN" ]
+    network_mode: host
+
+  sanic:
+    build:
+      args: { LIBS: sanic } # 24.6.0
+    command: [ "sanic", "sanic_:app", "--single-process", "--no-access-logs" ]
+    network_mode: host
+
+  blacksheep:
+    build:
+      args: { LIBS: blacksheep } # 2.0.7
+    command: [ "uvicorn", "blacksheep_:app", "--no-access-log" ]
+    network_mode: host
+
+  falcon:
+    build:
+      args: { LIBS: falcon } # 4.0.2
+    command: [ "uvicorn", "falcon_:app", "--no-access-log" ]
+    network_mode: host
+
+  fastapi:
+    build:
+      args: { LIBS: fastapi } # 0.115.5
+    command: [ "uvicorn", "fastapi_:app", "--no-access-log" ]
+    network_mode: host
+
+  muffin:
+    build:
+      args: { LIBS: muffin } # 0.102.3
+    command: [ "uvicorn", "muffin_:app", "--no-access-log" ]
+    network_mode: host
+
+  starlette:
+    build:
+      args: { LIBS: starlette } # 0.41.3
+    command: [ "uvicorn", "starlette_:app", "--no-access-log" ]
     network_mode: host
 
   uvicorn:
-    build: .
-    command: ["uvicorn", "uvicorn_:app", "--no-access-log"]
+    build:
+      args: { LIBS: uvicorn }
+    command: [ "uvicorn", "uvicorn_:app", "--no-access-log" ]
     network_mode: host
