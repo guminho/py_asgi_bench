@@ -1,4 +1,4 @@
-from falcon import Request, Response, HTTP_200, MEDIA_TEXT
+from falcon import HTTP_200, MEDIA_TEXT, Request, Response
 from falcon.asgi import App
 
 

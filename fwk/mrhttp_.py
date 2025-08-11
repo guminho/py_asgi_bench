@@ -1,4 +1,4 @@
-from mrhttp import app, Request
+from mrhttp import Request, app
 
 
 @app.route("/hello/{}", _type="text")

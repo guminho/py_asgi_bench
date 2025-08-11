@@ -59,6 +59,30 @@ services:
     command: [ "uvicorn", "fastapi_:app", "--no-access-log" ]
     network_mode: host
 
+  quart:
+    build:
+      args: { LIBS: quart }
+    command: [ "uvicorn", "quart_:app", "--no-access-log" ]
+    network_mode: host
+
+  lilya:
+    build:
+      args: { LIBS: lilya }
+    command: [ "uvicorn", "lilya_:app", "--no-access-log" ]
+    network_mode: host
+
+  esmerald:
+    build:
+      args: { LIBS: esmerald }
+    command: [ "uvicorn", "esmerald_:app", "--no-access-log" ]
+    network_mode: host
+
+  litestar:
+    build:
+      args: { LIBS: litestar }
+    command: [ "uvicorn", "litestar_:app", "--no-access-log" ]
+    network_mode: host
+
   muffin:
     build:
       args: { LIBS: muffin } # 0.102.3

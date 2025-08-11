@@ -1,4 +1,4 @@
-from sanic import Sanic, Request, text
+from sanic import Request, Sanic, text
 
 app = Sanic("App")
 

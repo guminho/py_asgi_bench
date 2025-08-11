@@ -1,4 +1,4 @@
-from granian.rsgi import Scope, HTTPProtocol
+from granian.rsgi import HTTPProtocol, Scope
 
 PLAINTEXT = ("content-type", "text/plain")
 

@@ -12,16 +12,20 @@ fwks='
     starlette
     robyn
     fastapi
+    lilya
+    esmerald
+    quart
+    litestar
 '
 OUT=report.txt
 echo -n > $OUT # reset
 
 for fwk in $fwks; do
     # start
-    docker-compose build -q $fwk
-    docker-compose up -d $fwk
+    docker compose build -q $fwk
+    docker compose up -d $fwk
     sleep 1.5
-    docker-compose ps --format 'table {{.Service}}' | tail -n1
+    docker compose ps --format 'table {{.Service}}' | tail -n1
     curl localhost:8000/hello/x && echo
     
     # bench
@@ -29,7 +33,7 @@ for fwk in $fwks; do
     bash ben.sh | tail -2 | head -1 | tr -s ' ' | cut -d' ' -f2 >> $OUT
     
     # stop
-    docker-compose stop $fwk
+    docker compose stop $fwk
     sleep 1
     echo
 done
