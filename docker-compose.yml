@@ -1,102 +1,125 @@
 services:
   aiohttp:
     build:
-      args: { LIBS: 'gunicorn aiohttp[speedups]' } # 3.11.8
-    command: [ "gunicorn", "aiohttp_:app", "-k=aiohttp.GunicornUVLoopWebWorker" ]
+      args: { LIBS: "gunicorn aiohttp[speedups]" }
+    command: ["gunicorn", "aiohttp_:app", "-k=aiohttp.GunicornUVLoopWebWorker"]
+    network_mode: host
+
+  baize:
+    build:
+      args: { LIBS: baize }
+    command: ["uvicorn", "baize_:app", "--no-access-log"]
+    network_mode: host
+
+  blacksheep:
+    build:
+      args: { LIBS: blacksheep }
+    command: ["uvicorn", "blacksheep_:app", "--no-access-log"]
+    network_mode: host
+
+  django:
+    build:
+      args: { LIBS: django }
+    command: ["uvicorn", "django_.asgi:app", "--no-access-log"]
     network_mode: host
 
   emmett:
     build:
-      args: { LIBS: emmett } # 2.6.2
-    command: [ "emmett", "-aemmett_.py", "serve" ]
+      args: { LIBS: "emmett[orjson]" }
+    command: ["emmett", "-aemmett_.py", "serve"]
     network_mode: host
 
   granian:
     build:
       args: { LIBS: granian }
-    command: [ "granian", "granian_:app" ]
+    command: ["granian", "granian_:app"]
     network_mode: host
 
   graniana:
     build:
       args: { LIBS: granian }
-    command: [ "granian", "--interface=asgi", "graniana:app" ]
+    command: ["granian", "--interface=asgi", "graniana:app"]
     network_mode: host
 
   mrhttp:
     build:
       args: { LIBS: mrhttp mrpacker }
-    command: [ "python", "mrhttp_.py" ]
+    command: ["python", "mrhttp_.py"]
     network_mode: host
 
   robyn:
     build:
-      args: { LIBS: robyn } # 0.64.2
-    command: [ "python", "robyn_.py", "--log-level=WARN" ]
-    network_mode: host
-
-  sanic:
-    build:
-      args: { LIBS: sanic } # 24.6.0
-    command: [ "sanic", "sanic_:app", "--single-process", "--no-access-logs" ]
-    network_mode: host
-
-  blacksheep:
-    build:
-      args: { LIBS: blacksheep } # 2.0.7
-    command: [ "uvicorn", "blacksheep_:app", "--no-access-log" ]
+      args: { LIBS: robyn }
+    command: ["python", "robyn_.py", "--log-level=WARN"]
     network_mode: host
 
   falcon:
     build:
-      args: { LIBS: falcon } # 4.0.2
-    command: [ "uvicorn", "falcon_:app", "--no-access-log" ]
+      args: { LIBS: falcon }
+    command: ["uvicorn", "falcon_:app", "--no-access-log"]
     network_mode: host
 
   fastapi:
     build:
-      args: { LIBS: fastapi } # 0.115.5
-    command: [ "uvicorn", "fastapi_:app", "--no-access-log" ]
-    network_mode: host
-
-  quart:
-    build:
-      args: { LIBS: quart }
-    command: [ "uvicorn", "quart_:app", "--no-access-log" ]
+      args: { LIBS: fastapi orjson python-multipart }
+    command: ["uvicorn", "fastapi_:app", "--no-access-log"]
     network_mode: host
 
   lilya:
     build:
       args: { LIBS: lilya }
-    command: [ "uvicorn", "lilya_:app", "--no-access-log" ]
+    command: ["uvicorn", "lilya_:app", "--no-access-log"]
     network_mode: host
 
   esmerald:
     build:
       args: { LIBS: esmerald }
-    command: [ "uvicorn", "esmerald_:app", "--no-access-log" ]
+    command: ["uvicorn", "esmerald_:app", "--no-access-log"]
     network_mode: host
 
   litestar:
     build:
       args: { LIBS: litestar }
-    command: [ "uvicorn", "litestar_:app", "--no-access-log" ]
+    command: ["uvicorn", "litestar_:app", "--no-access-log"]
     network_mode: host
 
   muffin:
     build:
-      args: { LIBS: muffin } # 0.102.3
-    command: [ "uvicorn", "muffin_:app", "--no-access-log" ]
+      args: { LIBS: muffin }
+    command: ["uvicorn", "muffin_:app", "--no-access-log"]
+    network_mode: host
+
+  quart:
+    build:
+      args: { LIBS: quart }
+    command: ["uvicorn", "quart_:app", "--no-access-log"]
+    network_mode: host
+
+  sanic:
+    build:
+      args: { LIBS: sanic }
+    command: ["sanic", "sanic_:app", "--single-process", "--no-access-logs"]
     network_mode: host
 
   starlette:
     build:
-      args: { LIBS: starlette } # 0.41.3
-    command: [ "uvicorn", "starlette_:app", "--no-access-log" ]
+      args: { LIBS: starlette python-multipart }
+    command: ["uvicorn", "starlette_:app", "--no-access-log"]
+    network_mode: host
+
+  tornado:
+    build:
+      args: { LIBS: tornado }
+    command: ["python", "tornado_.py"]
     network_mode: host
 
   uvicorn:
     build:
       args: { LIBS: uvicorn }
-    command: [ "uvicorn", "uvicorn_:app", "--no-access-log" ]
+    command: ["uvicorn", "uvicorn_:app", "--no-access-log"]
+    network_mode: host
+
+  gin:
+    build:
+      dockerfile: gin.Dockerfile
     network_mode: host

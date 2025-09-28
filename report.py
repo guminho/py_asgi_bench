@@ -1,27 +1,20 @@
-# tqdm==4.66.4
-from tqdm import tqdm
-
+results = []
+svc, latency, rps = None, None, None
 with open("report.txt") as f:
-    lines = f.read()
-lines = lines.splitlines()
-lines = [line.split(":") for line in lines]
+    for line in f:
+        line: str = line.strip()
+        if "svc:" in line:
+            svc = line.split(":")[1]
+        elif "Latency" in line:
+            latency = line.split()[1]
+        elif "Requests/sec:" in line:
+            rps = float(line.split(":")[1])
+            results.append((svc, latency, rps))
 
-fwks = [(x, float(y)) for x, y in lines]
-fwks = sorted(fwks, key=lambda x: x[1], reverse=True)
-print(fwks)
-
-total = 100
-ncols = 50
-bar_format = "{desc:10}:{postfix:6}|{bar}| {n_fmt}/{total_fmt}"
-COEF = fwks[0][1] / total
-
-for fwk in fwks:
-    with tqdm(
-        total=total,
-        ncols=ncols,
-        bar_format=bar_format,
-        ascii=True,
-        desc=fwk[0],
-        postfix=int(fwk[1]),
-    ) as pbar:
-        pbar.update(int(fwk[1] / COEF))
+results.sort(key=lambda x: -x[-1])
+rmax = results[0][-1]
+width = 30
+for svc, latency, rps in results:
+    ratio = rps / rmax
+    bar = ("#" * int(ratio * width)).ljust(width)
+    print(f"{svc:11}:{latency:>8}:{rps:8.1f}|{bar}|{ratio*100:5.1f}")

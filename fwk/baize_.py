@@ -1,37 +1,50 @@
+from baize.asgi import (
+    HTMLResponse,
+    JSONResponse,
+    PlainTextResponse,
+    Request,
+    Response,
+    Router,
+    request_response,
+)
 from common import NUM_ROUTE, build_html, build_json
-from starlette.applications import Starlette
-from starlette.requests import Request
-from starlette.responses import HTMLResponse, JSONResponse, PlainTextResponse
 
-app = Starlette()
+routes = []
 
 
 # first add ten more routes to load routing system
 # ------------------------------------------------
+@request_response
 async def req_ok(request):
     return PlainTextResponse("ok")
 
 
 for n in range(NUM_ROUTE):
-    app.add_route(f"/route-{n}", req_ok, name=f"req_ok_{n}")
+    routes.append((f"/route-{n}", req_ok))
 
 
 # then prepare endpoints for the benchmark
 # ----------------------------------------
-async def view_html(request: Request):
+@request_response
+async def view_html(request: Request) -> Response:
     """Return HTML content"""
     count = request.path_params["count"]
     content = await build_html(count)
     return HTMLResponse(content)
 
 
-async def view_api(request: Request):
-    """Return JSON content"""
+@request_response
+async def view_api(request: Request) -> Response:
+    """Return JSON content."""
     user = request.path_params["user"]
     record = request.path_params["record"]
     content = await build_json(user, record)
+
     return JSONResponse(content)
 
 
-app.add_route("/html/{count:int}", view_html)
-app.add_route("/api/users/{user:int}/records/{record:int}", view_api)
+app = Router(
+    *routes,
+    ("/html/{count:int}", view_html),
+    ("/api/users/{user:int}/records/{record:int}", view_api),
+)
